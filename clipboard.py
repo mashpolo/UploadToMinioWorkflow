@@ -7,16 +7,18 @@ from AppKit import NSPasteboard, NSPasteboardTypePNG,\
         NSPasteboardTypeTIFF, NSPasteboardTypeString,\
         NSFilenamesPboardType
 
+
 def _convert_to_png(from_path, to_path):
     # convert it to png file
     os.system('sips -s format png %s --out %s' % (from_path, to_path))
 
+
 def get_paste_img_file():
-    ''' get a img file from clipboard;
+    """ get a img file from clipboard;
     the return object is a `tempfile.NamedTemporaryFile`
     you can use the name field to access the file path.
     the tmp file will be delete as soon as possible(when gc happened or close explicitly)
-    you can not just return a path, must hold the reference'''
+    you can not just return a path, must hold the reference"""
 
     pb = NSPasteboard.generalPasteboard()
     data_type = pb.types()
@@ -69,3 +71,7 @@ def get_paste_img_file():
         tmp_clipboard_img_file.close()
         return png_file
 
+
+def alert(msg, title="Warming!"):
+    '''alrt user in notification center'''
+    os.system('osascript -e \'display notification "%s" with title "%s"\'' % (msg, title))
